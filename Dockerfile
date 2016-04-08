@@ -11,9 +11,9 @@ RUN apt-get install -y oracle-java8-installer
 
 #install tomcat
 WORKDIR /opt
-RUN wget http://apache.go-parts.com/tomcat/tomcat-8/v8.0.26/bin/apache-tomcat-8.0.26.tar.gz
-RUN tar -zxvf apache-tomcat-8.0.26.tar.gz
-RUN mv apache-tomcat-8.0.26 /tomcat
+RUN wget http://apache.go-parts.com/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz
+RUN tar -zxvf apache-tomcat-8.0.33.tar.gz
+RUN mv apache-tomcat-8.0.33 /tomcat
 
 # install mysql
 RUN echo "mysql-server mysql-server/root_password password password" | debconf-set-selections
@@ -54,7 +54,7 @@ RUN mv mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar /tomcat/c
 #install sakai
 RUN git clone https://github.com/sakaiproject/sakai.git /sakai
 WORKDIR /sakai
-RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/tomcat
+RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/tomcat -Dmaven.test.skip=true
 
 #configure mysql
 ADD ./mysql/my.conf /etc/mysql/my.conf
